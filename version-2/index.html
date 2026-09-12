@@ -1,0 +1,278 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Reaction Lab — a refined reaction speed training game with multiple challenge modes and persistent stats."
+    />
+    <title>Reaction Lab</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar" aria-label="Main navigation">
+        <div class="brand-wrap" aria-label="Reaction Lab home">
+          <div class="brand-mark">◉</div>
+          <div class="brand-copy">
+            <p class="eyebrow">Performance Lab</p>
+            <h1>Reaction Lab</h1>
+          </div>
+        </div>
+
+        <nav class="topbar-actions" aria-label="Main actions">
+          <button id="themeToggleBtn" class="icon-button" type="button" aria-label="Toggle color theme">
+            <span class="icon">☾</span>
+            <span class="label">Dark</span>
+          </button>
+          <button id="settingsBtn" class="icon-button" type="button" aria-label="Open settings panel">
+            <span class="icon">⚙</span>
+            <span class="label">Settings</span>
+          </button>
+          <button id="statsBtn" class="icon-button" type="button" aria-label="Open statistics panel">
+            <span class="icon">▣</span>
+            <span class="label">Stats</span>
+          </button>
+          <button id="helpBtn" class="icon-button" type="button" aria-label="Open game help">
+            <span class="icon">?</span>
+            <span class="label">Help</span>
+          </button>
+        </nav>
+      </header>
+
+      <main class="content-grid">
+        <aside class="panel mode-panel" aria-labelledby="mode-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Game Modes</p>
+              <h2 id="mode-heading">Choose Mode</h2>
+            </div>
+          </div>
+
+          <div class="mode-grid" role="list" aria-label="Game mode selection">
+            <button class="mode-card active" type="button" data-mode="classic" aria-pressed="true">
+              <span class="mode-badge">Classic</span>
+              <strong>Classic Reaction</strong>
+              <small>Single precise test</small>
+            </button>
+            <button class="mode-card" type="button" data-mode="five" aria-pressed="false">
+              <span class="mode-badge">5 Rounds</span>
+              <strong>Challenge</strong>
+              <small>Average + best + worst</small>
+            </button>
+            <button class="mode-card" type="button" data-mode="ten" aria-pressed="false">
+              <span class="mode-badge">10 Rounds</span>
+              <strong>Long Challenge</strong>
+              <small>Consistency under pressure</small>
+            </button>
+            <button class="mode-card" type="button" data-mode="aim" aria-pressed="false">
+              <span class="mode-badge">Aim</span>
+              <strong>Target Chase</strong>
+              <small>Quick strikes on targets</small>
+            </button>
+            <button class="mode-card" type="button" data-mode="color" aria-pressed="false">
+              <span class="mode-badge">Color</span>
+              <strong>Color Reaction</strong>
+              <small>Spot the correct cue</small>
+            </button>
+          </div>
+        </aside>
+
+        <section class="panel arena-panel" aria-labelledby="arena-heading">
+          <div class="arena-header">
+            <div>
+              <p class="eyebrow">Live Session</p>
+              <h2 id="arena-heading">Arena</h2>
+            </div>
+            <span class="status-pill" id="statusBadge" aria-live="polite">READY</span>
+          </div>
+
+          <div id="gameArena" class="game-arena" aria-live="polite" aria-label="Reaction target area">
+            <div id="target" class="target" aria-label="Reaction target" tabindex="0"></div>
+            <div id="arenaMessage" class="arena-message" role="status">
+              Select a mode and press Start.
+            </div>
+          </div>
+
+          <div class="arena-actions">
+            <button id="startBtn" class="primary-button" type="button">Start</button>
+            <button id="retryBtn" class="secondary-button" type="button">Retry</button>
+          </div>
+
+          <div id="resultCard" class="result-card hidden" aria-live="polite"></div>
+        </section>
+
+        <aside class="panel stats-panel" aria-labelledby="stats-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Performance</p>
+              <h2 id="stats-heading">Statistics</h2>
+            </div>
+          </div>
+
+          <div id="statsDashboard" class="stats-grid" aria-live="polite"></div>
+        </aside>
+      </main>
+    </div>
+
+    <div id="settingsModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal="settings"></div>
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">Preferences</p>
+            <h3 id="settingsTitle">Settings</h3>
+          </div>
+          <button class="close-button" type="button" data-close-modal="settings" aria-label="Close settings">✕</button>
+        </div>
+
+        <form id="settingsForm" class="settings-form">
+          <div class="field-group">
+            <label for="difficultySelect">Difficulty</label>
+            <select id="difficultySelect">
+              <option value="easy">Easy</option>
+              <option value="normal">Normal</option>
+              <option value="hard">Hard</option>
+              <option value="extreme">Extreme</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="shapeSelect">Shape</label>
+            <select id="shapeSelect">
+              <option value="circle">Circle</option>
+              <option value="square">Square</option>
+              <option value="rounded-square">Rounded Square</option>
+              <option value="triangle">Triangle</option>
+              <option value="star">Star</option>
+              <option value="diamond">Diamond</option>
+              <option value="hexagon">Hexagon</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="sizeSelect">Size</label>
+            <select id="sizeSelect">
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large">Large</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+
+          <div class="field-group range-field">
+            <label for="customSizeRange">Custom Size</label>
+            <input id="customSizeRange" type="range" min="42" max="180" step="4" value="92" />
+          </div>
+
+          <div class="field-group">
+            <label for="colorSelect">Color</label>
+            <select id="colorSelect">
+              <option value="random">Random</option>
+              <option value="red">Red</option>
+              <option value="blue">Blue</option>
+              <option value="green">Green</option>
+              <option value="purple">Purple</option>
+              <option value="yellow">Yellow</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+
+          <div class="field-group color-field">
+            <label for="customColorInput">Custom Color</label>
+            <input id="customColorInput" type="color" value="#f59e0b" />
+          </div>
+
+          <div class="field-group">
+            <label for="animationSelect">Animation</label>
+            <select id="animationSelect">
+              <option value="none">None</option>
+              <option value="pop">Pop</option>
+              <option value="zoom">Zoom</option>
+              <option value="bounce">Bounce</option>
+              <option value="fade">Fade</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="positionSelect">Position</label>
+            <select id="positionSelect">
+              <option value="random">Random</option>
+              <option value="center">Center</option>
+              <option value="anywhere">Anywhere</option>
+              <option value="avoid-edges">Avoid Edges</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="themeSelect">Theme</label>
+            <select id="themeSelect">
+              <option value="dark">Dark</option>
+              <option value="light">Light</option>
+            </select>
+          </div>
+
+          <div class="checkbox-row">
+            <label for="soundToggle">
+              <input id="soundToggle" type="checkbox" />
+              Sound On
+            </label>
+          </div>
+
+          <div class="checkbox-row">
+            <label for="reduceMotionToggle">
+              <input id="reduceMotionToggle" type="checkbox" />
+              Reduce Motion
+            </label>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="secondary-button" id="resetStatsBtn">Reset Stats</button>
+            <button type="button" class="secondary-button" id="resetAppBtn">Reset All &amp; Start Classic</button>
+            <button type="button" class="primary-button" data-close-modal="settings">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="statsModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal="stats"></div>
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="statsModalTitle">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">Dashboard</p>
+            <h3 id="statsModalTitle">Performance Overview</h3>
+          </div>
+          <button class="close-button" type="button" data-close-modal="stats" aria-label="Close statistics">✕</button>
+        </div>
+        <div id="statsModalContent" class="stats-modal-content"></div>
+      </div>
+    </div>
+
+    <div id="helpModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal="help"></div>
+      <div class="modal-card small-card" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">Quick Guide</p>
+            <h3 id="helpTitle">How to Play</h3>
+          </div>
+          <button class="close-button" type="button" data-close-modal="help" aria-label="Close help">✕</button>
+        </div>
+
+        <ul class="help-list">
+          <li>Choose a game mode and start.</li>
+          <li>Wait for the target to appear before clicking.</li>
+          <li>Faster click = better reaction.</li>
+          <li>Early clicks count as invalid attempts.</li>
+          <li>Use settings to tune shape, size, color, and difficulty.</li>
+          <li>Press Space to start and Escape to close panels.</li>
+        </ul>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
