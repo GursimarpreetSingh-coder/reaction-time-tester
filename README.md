@@ -69,8 +69,16 @@ An enhanced version of the Reaction Tester with more gameplay options and improv
 
 # 📸 Preview
 
+### 🟢 Basic Version (V1)
+
 <p align="center">
-  <img src="./reaction-tester-preview.png" width="100%" alt="Reaction Tester Preview">
+  <img src="./reaction-tester-preview.png" width="100%" alt="Basic Version Preview">
+</p>
+
+### 🔵 Advanced Version (V2)
+
+<p align="center">
+  <img src="./reaction_tester.png" width="100%" alt="Advanced Version Preview">
 </p>
 
 ---
