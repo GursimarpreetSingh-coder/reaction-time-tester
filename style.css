@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    font-size: medium;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+h1, p {
+    margin: 10px;
+}
+
+#box {
+    width: 100px;
+    height: 100px;
+    background-color: steelblue;
+    position: absolute;
+    display: none;
+    cursor: pointer;
+}
